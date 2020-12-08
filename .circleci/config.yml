@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  getting-the-code:
+  build:
     docker:
       - image: alpine:3.7
         auth:
