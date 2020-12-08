@@ -14,39 +14,6 @@ jobs:
             ls -al
             npm i
             cd src
-            ls
             npm i
             cd ..
-            # npm run dev
-            echo '^^^That should look familiar^^^'
-  # Installing-node-stuff-for-t2:
-  #   docker:
-  #     - image: circleci/node:12-browsers
-  #       auth:
-  #         username: mydockerhub-user
-  #         password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-  #   steps:
-  #     - run:
-  #         name: Running In A Container With Node
-  #         command: |
-
-    # Installing-node-stuff-for-src:
-    # docker:
-    #   - image: circleci/node:12-browsers
-    #     auth:
-    #       username: mydockerhub-user
-    #       password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    # steps:
-    #   - run:
-    #       name: Running In A Container With Node
-    #       command: |
-            
-            
-# workflows:
-#  version: 2
-#  Example_Workflow:
-#    jobs:
-#      - build
-#      - Installing-node-stuff-for-t2:
-#          requires:
-#            - build
+  
