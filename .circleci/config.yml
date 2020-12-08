@@ -14,6 +14,7 @@ jobs:
             ls -al
             npm i
             cd src
+            ls
             npm i
             cd ..
             # npm run dev
