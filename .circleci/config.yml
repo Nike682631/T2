@@ -28,7 +28,14 @@ jobs:
             npm i
             cd ..
             npm run dev
-
+workflows:
+ version: 2
+ Example_Workflow:
+   jobs:
+     - build
+     - Installing-node-stuff-for-t2:
+         requires:
+           - build
     # Installing-node-stuff-for-src:
     # docker:
     #   - image: circleci/node:12-browsers
