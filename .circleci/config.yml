@@ -12,30 +12,23 @@ jobs:
           name: Code Has Arrived
           command: |
             ls -al
-            echo '^^^That should look familiar^^^'
-  Installing-node-stuff-for-t2:
-    docker:
-      - image: circleci/node:12-browsers
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    steps:
-      - run:
-          name: Running In A Container With Node
-          command: |
             npm i
             cd src
             npm i
             cd ..
             npm run dev
-workflows:
- version: 2
- Example_Workflow:
-   jobs:
-     - build
-     - Installing-node-stuff-for-t2:
-         requires:
-           - build
+            echo '^^^That should look familiar^^^'
+  # Installing-node-stuff-for-t2:
+  #   docker:
+  #     - image: circleci/node:12-browsers
+  #       auth:
+  #         username: mydockerhub-user
+  #         password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  #   steps:
+  #     - run:
+  #         name: Running In A Container With Node
+  #         command: |
+
     # Installing-node-stuff-for-src:
     # docker:
     #   - image: circleci/node:12-browsers
@@ -48,3 +41,11 @@ workflows:
     #       command: |
             
             
+# workflows:
+#  version: 2
+#  Example_Workflow:
+#    jobs:
+#      - build
+#      - Installing-node-stuff-for-t2:
+#          requires:
+#            - build
