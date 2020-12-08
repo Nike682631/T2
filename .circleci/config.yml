@@ -16,7 +16,7 @@ jobs:
             cd src
             npm i
             cd ..
-            npm run dev
+            # npm run dev
             echo '^^^That should look familiar^^^'
   # Installing-node-stuff-for-t2:
   #   docker:
