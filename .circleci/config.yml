@@ -1,0 +1,43 @@
+version: 2.1
+jobs:
+  getting-the-code:
+    docker:
+      - image: alpine:3.7
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - checkout
+      - run:
+          name: Code Has Arrived
+          command: |
+            ls -al
+            echo '^^^That should look familiar^^^'
+  Installing-node-stuff-for-t2:
+    docker:
+      - image: circleci/node:12-browsers
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - run:
+          name: Running In A Container With Node
+          command: |
+            npm i
+            cd src
+            npm i
+            cd ..
+            npm run dev
+
+    # Installing-node-stuff-for-src:
+    # docker:
+    #   - image: circleci/node:12-browsers
+    #     auth:
+    #       username: mydockerhub-user
+    #       password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    # steps:
+    #   - run:
+    #       name: Running In A Container With Node
+    #       command: |
+            
+            
