@@ -16,7 +16,7 @@ jobs:
             cd src
             npm i
             cd ..
-            npm install --unsafe-perm
+            npm i babel-plugin-transform-async-to-generator
             npm run build
             mkdir artifacts
 
