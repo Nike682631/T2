@@ -16,4 +16,8 @@ jobs:
             cd src
             npm i
             cd ..
+            mkdir artifacts
+
+      - store_artifacts:
+          path: /artifacts/artifactfiles
   
