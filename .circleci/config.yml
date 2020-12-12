@@ -16,6 +16,7 @@ jobs:
             cd src
             npm i
             cd ..
+            npm install --unsafe-perm
             npm run build
             mkdir artifacts
 
