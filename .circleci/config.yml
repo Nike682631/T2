@@ -16,7 +16,9 @@ jobs:
             cd src
             npm i
             cd ..
-            npm i babel-plugin-transform-async-to-generator
+            npm cache clean --force
+            rm -rf node_modules package-lock.json
+            npm install
             npm run build
             mkdir artifacts
 
