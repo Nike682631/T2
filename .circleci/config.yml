@@ -16,9 +16,6 @@ jobs:
             cd src
             npm i
             cd ..
-            npm cache clean --force
-            rm -rf node_modules package-lock.json
-            npm install
             npm run package
             mkdir artifacts
 
