@@ -16,6 +16,7 @@ jobs:
             cd src
             npm i
             cd ..
+            sudo apt-get install rpm 
             npm run package
             mkdir artifacts
 
