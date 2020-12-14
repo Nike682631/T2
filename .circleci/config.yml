@@ -18,7 +18,6 @@ jobs:
       - run:
           name: Code Has Arrived
           command: |
-            ls -al
             sudo apt-get install git
             npm i
             cd src
@@ -52,13 +51,14 @@ jobs:
             npm i
             git clone https://github.com/Nike682631/extraResources
             cd ..
-            dpkg --add-architecture i386 && apt-get update && apt-get install wine32
-            wget -nc https://dl.winehq.org/wine-builds/winehq.key
-            sudo apt-key add winehq.key
-            sudo apt-get install software-properties-common
-            sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
-            sudo apt update
-            sudo apt install --install-recommends winehq-stable
+            # dpkg --add-architecture i386 && apt-get update && apt-get install wine32
+            # wget -nc https://dl.winehq.org/wine-builds/winehq.key
+            # sudo apt-key add winehq.key
+            # sudo apt-get install software-properties-common
+            # sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+            # sudo apt update
+            # sudo apt install --install-recommends winehq-stable
+            sudo apt install wine64
             npm run package-win
             
       
@@ -76,13 +76,12 @@ jobs:
       - run:
           name: Code Has Arrived
           command: |
-            ls -al
             npm i
             cd src
             npm i
             git clone https://github.com/Nike682631/extraResources
             cd .. 
-            npm i electron-builder
+            npm install electron-builder --save-dev
             npm run build && electron-builder build --mac --publish never
       
       - store_artifacts:
