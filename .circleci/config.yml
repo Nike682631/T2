@@ -22,4 +22,44 @@ jobs:
 
       - store_artifacts:
           path: ./release
-   
+
+  buildformac:
+    macos:
+      xcode: 12.0.0
+    steps:
+      - checkout
+      - run:
+          name: Code Has Arrived
+          command: |
+            ls -al
+            npm i
+            cd src
+            npm i
+            cd ..
+            brew install rpm 
+            npm run package
+            mkdir artifacts
+      
+      - store_artifacts:
+          path: ./release       
+
+orbs:
+  win: circleci/windows@2.2.0
+
+  buildforwindows:
+    executor: win/default
+    steps:
+      - checkout
+      - run:
+          name: Code Has Arrived
+          command: |
+            ls -al
+            npm i
+            cd src
+            npm i
+            cd ..
+            npm run package
+            mkdir artifacts
+      
+      - store_artifacts:
+          path: ./release  

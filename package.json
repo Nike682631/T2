@@ -125,7 +125,6 @@
     "linux": {
       "target": [
         "deb",
-        "rpm",
         "snap"
       ],
       "category": "Development"
