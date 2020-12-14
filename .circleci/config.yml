@@ -51,14 +51,14 @@ jobs:
             npm i
             git clone https://github.com/Nike682631/extraResources
             cd ..
-            # dpkg --add-architecture i386 && apt-get update && apt-get install wine32
+            sudo dpkg --add-architecture i386 && apt-get update && apt-get install wine32
             # wget -nc https://dl.winehq.org/wine-builds/winehq.key
             # sudo apt-key add winehq.key
             # sudo apt-get install software-properties-common
             # sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
             # sudo apt update
             # sudo apt install --install-recommends winehq-stable
-            sudo apt install wine64
+            # sudo apt install wine64
             npm run package-win
             
       
