@@ -69,5 +69,5 @@ workflows:
   buildforallos:
     jobs:
       - build
-      - buildformac
+      # - buildformac
       - buildforwindows
