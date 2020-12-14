@@ -1,5 +1,7 @@
 version: 2.1
 
+orbs:
+  win: circleci/windows@2.2.0
 
 jobs:
   build:
@@ -36,11 +38,7 @@ jobs:
 
 
   buildforwindows:
-    docker:
-      - image: circleci/node:12-browsers
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    executor: win/default
     steps:
       - checkout
       - run:
@@ -51,15 +49,7 @@ jobs:
             npm i
             git clone https://github.com/Nike682631/extraResources
             cd ..
-            sudo dpkg --add-architecture i386 && apt-get update && apt-get install wine32
-            # wget -nc https://dl.winehq.org/wine-builds/winehq.key
-            # sudo apt-key add winehq.key
-            # sudo apt-get install software-properties-common
-            # sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
-            # sudo apt update
-            # sudo apt install --install-recommends winehq-stable
-            # sudo apt install wine64
-            npm run package-win
+            npm run package
             
       
       - store_artifacts:
