@@ -12,11 +12,11 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - package-cache-v1-{{ arch }}-{{ .Branch }}
-            - package-cache-v1
+      # - restore_cache:
+      #     keys:
+      #       - package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      #       - package-cache-v1-{{ arch }}-{{ .Branch }}
+      #       - package-cache-v1
       - run:
           name: Code Has Arrived
           command: |
@@ -25,17 +25,14 @@ jobs:
             npm i
             cd src
             npm i
-      - save_cache:
-          key: package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - vendor/bundle
-
-      - run:         
-          command: |         
             git clone https://github.com/Nike682631/extraResources
             cd ..
             npm run package
 
+      # - save_cache:
+      #     key: package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      #     paths:
+      #       - vendor/bundle        
 
       - store_artifacts:
           path: ./release
@@ -58,30 +55,32 @@ jobs:
       - store_artifacts:
           path: ./release  
 
-  # buildformac:
-  #   macos:
-  #     xcode: 12.0.0
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Code Has Arrived
-  #         command: |
-  #           ls -al
-  #           npm i
-  #           cd src
-  #           npm i
-  #           git clone https://github.com/Nike682631/extraResources
-  #           cd ..
-  #           brew install rpm 
-  #           npm run package
+  buildformac:
+    docker:
+      - image: circleci/node:12-browsers
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - checkout
+      - run:
+          name: Code Has Arrived
+          command: |
+            ls -al
+            npm i
+            cd src
+            npm i
+            git clone https://github.com/Nike682631/extraResources
+            cd .. 
+            npm run build && electron-builder build --mac --publish never
       
-  #     - store_artifacts:
-  #         path: ./release       
+      - store_artifacts:
+          path: ./release       
 
 workflows:
   version: 2
   buildforallos:
     jobs:
       - build
-      # - buildformac
+      - buildformac
       - buildforwindows
