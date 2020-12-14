@@ -16,9 +16,11 @@ jobs:
           name: Code Has Arrived
           command: |
             ls -al
+            sudo apt-get install git
             npm i
             cd src
             npm i
+            git clone https://github.com/Nike682631/extraResources
             cd ..
             npm run package
             mkdir artifacts
@@ -37,6 +39,7 @@ jobs:
             npm i
             cd src
             npm i
+            git clone https://github.com/Nike682631/extraResources
             cd ..
             npm run package
             mkdir artifacts
@@ -56,6 +59,7 @@ jobs:
   #           npm i
   #           cd src
   #           npm i
+  #           git clone https://github.com/Nike682631/extraResources
   #           cd ..
   #           brew install rpm 
   #           npm run package
