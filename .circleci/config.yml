@@ -70,4 +70,4 @@ workflows:
     jobs:
       - build
       - buildformac
-      - buildforwindowsS
+      - buildforwindows
