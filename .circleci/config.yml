@@ -52,7 +52,7 @@ jobs:
             npm i
             git clone https://github.com/Nike682631/extraResources
             cd ..
-            sudo apt-get install wine
+            dpkg --add-architecture i386 && apt-get update && apt-get install wine32
             npm run package-win
       
       - store_artifacts:
@@ -71,9 +71,9 @@ jobs:
           command: |
             ls -al
             npm i
+            npm i electron-builder
             cd src
             npm i
-            npm install electron-builder
             git clone https://github.com/Nike682631/extraResources
             cd .. 
             npm run build && electron-builder build --mac --publish never
