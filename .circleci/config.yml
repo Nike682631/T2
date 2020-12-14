@@ -12,6 +12,11 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - package-cache-v1-{{ arch }}-{{ .Branch }}
+            - package-cache-v1
       - run:
           name: Code Has Arrived
           command: |
@@ -20,6 +25,12 @@ jobs:
             npm i
             cd src
             npm i
+      - save_cache:
+          key: package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - vendor/bundle
+
+      - run:                  
             git clone https://github.com/Nike682631/extraResources
             cd ..
             npm run package
