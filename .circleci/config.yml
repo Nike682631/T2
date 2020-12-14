@@ -81,6 +81,6 @@ workflows:
   version: 2
   buildforallos:
     jobs:
-      # - build
+      - build
       # - buildformac
-      - buildforwindows
+      # - buildforwindows
