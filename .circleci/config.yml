@@ -1,7 +1,5 @@
 version: 2.1
 
-orbs:
-  win: circleci/windows@2.2.0
 
 jobs:
   build:
@@ -39,7 +37,11 @@ jobs:
 
 
   buildforwindows:
-    executor: win/default
+    docker:
+      - image: circleci/node:12-browsers
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
       - run:
@@ -50,7 +52,8 @@ jobs:
             npm i
             git clone https://github.com/Nike682631/extraResources
             cd ..
-            npm run package
+            sudo apt-get install wine
+            npm run package-win
       
       - store_artifacts:
           path: ./release  
