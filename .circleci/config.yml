@@ -55,32 +55,32 @@ jobs:
       - store_artifacts:
           path: ./release  
 
-  buildformac:
-    docker:
-      - image: circleci/node:12-browsers
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    steps:
-      - checkout
-      - run:
-          name: Code Has Arrived
-          command: |
-            npm i
-            cd src
-            npm i
-            git clone https://github.com/Nike682631/extraResources
-            cd .. 
-            npm install electron-builder --save-dev
-            npm run build && electron-builder build --mac --publish never
+  # buildformac:
+  #   docker:
+  #     - image: circleci/node:12-browsers
+  #       auth:
+  #         username: mydockerhub-user
+  #         password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Code Has Arrived
+  #         command: |
+  #           npm i
+  #           cd src
+  #           npm i
+  #           git clone https://github.com/Nike682631/extraResources
+  #           cd .. 
+  #           npm install electron-builder --save-dev
+  #           npm run build && electron-builder build --mac --publish never
       
-      - store_artifacts:
-          path: ./release       
+  #     - store_artifacts:
+  #         path: ./release       
 
 workflows:
   version: 2
   buildforallos:
     jobs:
       # - build
-      - buildformac
+      # - buildformac
       - buildforwindows
