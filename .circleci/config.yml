@@ -77,11 +77,11 @@ jobs:
           command: |
             ls -al
             npm i
-            npm i electron-builder
             cd src
             npm i
             git clone https://github.com/Nike682631/extraResources
             cd .. 
+            npm i electron-builder
             npm run build && electron-builder build --mac --publish never
       
       - store_artifacts:
