@@ -70,6 +70,7 @@ jobs:
             npm i
             cd src
             npm i
+            npm install electron-builder
             git clone https://github.com/Nike682631/extraResources
             cd .. 
             npm run build && electron-builder build --mac --publish never
