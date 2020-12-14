@@ -33,51 +33,19 @@ const StyledPre = styled.pre`
 `;
 
 const preContent = `
-{
-  "selectedNode": "Tezos Mainnet (nautilus.cloud)",
-  "nodesList": [
+  {
+    "selectedNode": "tezosName",
+    "nodesList": [
       {
-          "displayName": "Tezos Mainnet (nautilus.cloud)",
-          "platform": "tezos",
-          "network": "mainnet",
-          "tezosUrl": "https://tezos-prod.cryptonomic-infra.tech:443",
-          "conseilUrl": "https://conseil-prod.cryptonomic-infra.tech:443",
-          "apiKey": "galleon"
-      },
-      {
-          "displayName": "Tezos Mainnet (nautilus.cloud + giganode.io)",
-          "platform": "tezos",
-          "network": "mainnet",
-          "tezosUrl": "https://mainnet-tezos.giganode.io",
-          "conseilUrl": "https://conseil-prod.cryptonomic-infra.tech:443",
-          "apiKey": "galleon"
-      },
-      {
-          "displayName": "Tezos Testnet (nautilus.cloud)",
-          "platform": "tezos",
-          "network": "carthagenet",
-          "tezosUrl": "https://tezos-dev.cryptonomic-infra.tech:443",
-          "conseilUrl": "https://conseil-dev.cryptonomic-infra.tech:443",
-          "apiKey": "galleon"
+        "displayName": "tezosName",
+        "platform": "tezos",
+        "network: "alphanet",
+        "tezosUrl": "https://127.0.0.1:8732/",
+        "conseilUrl": "https://127.0.0.1:8730/",
+        "apiKey": "apiKey"
       }
-  ],
-  "selectedPath": "Default",
-  "pathsList": [
-      {
-          "label": "Default",
-          "derivation": "44'/1729'/0'/0'/0'"
-      },
-      {
-          "label": "Ledger Live",
-          "derivation": "44'/1729'/0'/0'"
-      },
-      {
-          "label": "TezBox",
-          "derivation": "44'/1729'/0'/0'"
-      }
-  ]
-}
-
+    ]
+  }
 `;
 
 function WalletNodesRequired() {
