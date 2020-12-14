@@ -4,56 +4,56 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-  # build:
-  #   docker:
-  #     - image: circleci/node:12-browsers
-  #       auth:
-  #         username: mydockerhub-user
-  #         password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-  #   steps:
-  #     - checkout
-  #     # - restore_cache:
-  #     #     keys:
-  #     #       - package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
-  #     #       - package-cache-v1-{{ arch }}-{{ .Branch }}
-  #     #       - package-cache-v1
-  #     - run:
-  #         name: Code Has Arrived
-  #         command: |
-  #           sudo apt-get install git
-  #           npm i
-  #           cd src
-  #           npm i
-  #           git clone https://github.com/Nike682631/extraResources
-  #           cd ..
-  #           npm run package
-
-  #     # - save_cache:
-  #     #     key: package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
-  #     #     paths:
-  #     #       - vendor/bundle        
-
-  #     - store_artifacts:
-  #         path: ./release
-
-
-  buildforwindows:
-    executor: win/default
+  build:
+    docker:
+      - image: circleci/node:12-browsers
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
+      # - restore_cache:
+      #     keys:
+      #       - package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      #       - package-cache-v1-{{ arch }}-{{ .Branch }}
+      #       - package-cache-v1
       - run:
           name: Code Has Arrived
           command: |
+            sudo apt-get install git
             npm i
             cd src
             npm i
             git clone https://github.com/Nike682631/extraResources
             cd ..
             npm run package
+
+      # - save_cache:
+      #     key: package-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      #     paths:
+      #       - vendor/bundle        
+
+      - store_artifacts:
+          path: ./release
+
+
+  # buildforwindows:
+  #   executor: win/default
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Code Has Arrived
+  #         command: |
+  #           npm i
+  #           cd src
+  #           npm i
+  #           git clone https://github.com/Nike682631/extraResources
+  #           cd ..
+  #           npm run package
             
       
-      - store_artifacts:
-          path: ./release  
+  #     - store_artifacts:
+  #         path: ./release  
 
   # buildformac:
   #   docker:
