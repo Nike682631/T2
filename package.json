@@ -214,6 +214,7 @@
     "bignumber.js": "9.0.0",
     "blakejs": "1.1.0",
     "connected-react-router": "6.8.0",
+    "electron-builder": "22.8.0",
     "electron-store": "5.1.1",
     "history": "4.10.1",
     "i18next": "19.4.4",
