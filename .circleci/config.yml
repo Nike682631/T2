@@ -56,11 +56,9 @@ jobs:
   #         path: ./release  
 
   # buildformac:
-  #   docker:
-  #     - image: circleci/node:12-browsers
-  #       auth:
-  #         username: mydockerhub-user
-  #         password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  #   macos:
+  #     xcode: 12.0.0
+
   #   steps:
   #     - checkout
   #     - run:
@@ -71,8 +69,7 @@ jobs:
   #           npm i
   #           git clone https://github.com/Nike682631/extraResources
   #           cd .. 
-  #           npm install electron-builder --save-dev
-  #           npm run build && electron-builder build --mac --publish never
+  #           npm run package
       
   #     - store_artifacts:
   #         path: ./release       
