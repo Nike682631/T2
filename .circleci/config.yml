@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
+
 jobs:
   build:
     docker:
@@ -43,9 +47,6 @@ jobs:
       - store_artifacts:
           path: ./release       
 
-orbs:
-  win: circleci/windows@2.2.0
-
   buildforwindows:
     executor: win/default
     steps:
@@ -63,6 +64,7 @@ orbs:
       
       - store_artifacts:
           path: ./release  
+
 
 workflows:
   version: 2
