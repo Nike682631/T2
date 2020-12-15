@@ -26,7 +26,7 @@ jobs:
         npm run package
     - uses: actions/upload-artifact@v2
       with:
-          name: my-artifact
+          name: my-artifact-linux
           path: ./release  
       env:
         DEFAULT_BRANCH: trunk       
@@ -55,7 +55,7 @@ jobs:
         npm run package
     - uses: actions/upload-artifact@v2
       with:
-          name: my-artifact
+          name: my-artifact-macos
           path: ./release          
       env:
         DEFAULT_BRANCH: trunk      
@@ -84,7 +84,7 @@ jobs:
         npm run package
     - uses: actions/upload-artifact@v2
       with:
-          name: my-artifact
+          name: my-artifact-windows
           path: ./release          
       env:
         DEFAULT_BRANCH: trunk      
