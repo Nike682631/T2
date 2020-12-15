@@ -18,7 +18,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
-        sudo apt-get install git    
         npm i
         cd src
         npm i
@@ -47,8 +46,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: |
-        # sudo apt-get install git    
+    - run: |    
         npm i
         cd src
         npm i
