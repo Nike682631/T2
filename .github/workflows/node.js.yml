@@ -1,0 +1,93 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        sudo apt-get install git    
+        npm i
+        cd src
+        npm i
+        git clone https://github.com/Nike682631/extraResources
+        cd ..
+        npm run package
+    - uses: actions/upload-artifact@v2
+      with:
+          name: my-artifact
+          path: ./release  
+      env:
+        DEFAULT_BRANCH: trunk       
+        CI: true
+
+  buildonmac:
+
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        # sudo apt-get install git    
+        npm i
+        cd src
+        npm i
+        git clone https://github.com/Nike682631/extraResources
+        cd ..
+        npm run package
+    - uses: actions/upload-artifact@v2
+      with:
+          name: my-artifact
+          path: ./release          
+      env:
+        DEFAULT_BRANCH: trunk      
+        CI: true
+
+  buildonwindows:
+
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |  
+        npm i
+        cd src
+        npm i
+        git clone https://github.com/Nike682631/extraResources
+        cd ..
+        npm run package
+    - uses: actions/upload-artifact@v2
+      with:
+          name: my-artifact
+          path: ./release          
+      env:
+        DEFAULT_BRANCH: trunk      
+        CI: true      
