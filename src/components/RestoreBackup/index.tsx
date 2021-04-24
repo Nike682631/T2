@@ -3,12 +3,14 @@ import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+
+import { importAddressThunk, importSecretKeyThunk } from '../../reduxContent/wallet/thunks';
+import * as ADD_ADDRESS_TYPES from '../../constants/AddAddressTypes';
+
 import TextField from '../TextField';
 import Button from '../Button';
 import SeedInput from './SeedInput';
 import PasswordInput from '../PasswordInput';
-import { importAddressThunk, importSecretKeyThunk } from '../../reduxContent/wallet/thunks';
-import * as ADD_ADDRESS_TYPES from '../../constants/AddAddressTypes';
 
 const MainContainer = styled.div`
     position: relative;
@@ -93,13 +95,16 @@ function RestoreBackup() {
     const [type, setType] = useState('phrase');
     const [seeds, setSeeds] = useState<string[]>([]);
     const [password, setPassword] = useState('');
-    const [isPassword, setIsPassword] = useState(false);
+    const [hasPassword, setHasPassword] = useState(false);
+    const [derivationPath, setDerivationPath] = useState('');
+    const [hasDerivationPath, setHasDerivationPath] = useState(false);
     const [key, setKey] = useState('');
     const [error, setError] = useState(false);
+    const [restoreDisabled, setRestoreDisabled] = useState(true);
 
     const importAddress = () => {
         if (type === 'phrase') {
-            dispatch(importAddressThunk(ADD_ADDRESS_TYPES.RESTORE, seeds.join(' '), '', '', '', password));
+            dispatch(importAddressThunk(ADD_ADDRESS_TYPES.RESTORE, seeds.join(' '), '', '', '', password, derivationPath));
         } else if (type === 'key') {
             dispatch(importSecretKeyThunk(key));
         }
@@ -113,45 +118,83 @@ function RestoreBackup() {
         }
     };
 
-    let isdisabled = false;
-    if (type === 'phrase') {
-        isdisabled = ![12, 15, 18, 21, 24].includes(seeds.length) || error;
-    } else {
-        isdisabled = !key;
-    }
+    const onTypeChange = (restoreType: string) => {
+        setType(restoreType);
+
+        if (restoreType === 'key') {
+            setRestoreDisabled(!key || key.trim().length === 0);
+        }
+
+        if (restoreType === 'phrase') {
+            setRestoreDisabled(![12, 15, 18, 21, 24].includes(seeds.length));
+        }
+    };
+
     return (
-        <MainContainer onKeyDown={event => onEnterPress(event.key, isdisabled)}>
+        <MainContainer onKeyDown={(event) => onEnterPress(event.key, restoreDisabled)}>
             <RestoreHeader>
                 {t('components.restoreBackup.restore_from')}
-                <RestoreTabs type={type} t={t} changeFunc={val => setType(val)} />
+                <RestoreTabs type={type} t={t} changeFunc={(val) => onTypeChange(val)} />
             </RestoreHeader>
             {type === 'phrase' && (
                 <Fragment>
                     <SeedInput
                         placeholder={t('containers.homeAddAddress.restore_mnemonic')}
                         seeds={seeds}
-                        onChange={val => setSeeds(val)}
-                        onError={err => setError(err)}
+                        onChange={(val) => {
+                            val = val.map((s) => s.toLowerCase());
+                            setSeeds(val);
+                            setRestoreDisabled(![12, 15, 18, 21, 24].includes(val.length));
+                            setError(false);
+                        }}
+                        onError={(err) => {
+                            setError(err);
+                            setRestoreDisabled(err);
+                        }}
+                        expectedWords={0}
                     />
 
                     <ToggleContainer>
                         <ToggleLabel>{t('components.restoreBackup.seed_encrypted_label')}</ToggleLabel>
-                        <Switch color="secondary" onChange={() => setIsPassword(!isPassword)} />
+                        <Switch color="secondary" onChange={() => setHasPassword(!hasPassword)} />
                     </ToggleContainer>
 
-                    {isPassword && (
+                    {hasPassword && (
                         <PasswordInput
                             label={t('components.restoreBackup.seed_phrase_password')}
                             password={password}
-                            onChange={val => setPassword(val)}
+                            onChange={(val) => setPassword(val)}
                             containerStyle={{ width: '60%' }}
                         />
                     )}
+
+                    <ToggleContainer>
+                        <ToggleLabel>{t('components.restoreBackup.seed_phrase_derived')}</ToggleLabel>
+                        <Switch color="secondary" onChange={() => setHasDerivationPath(!hasDerivationPath)} />
+                    </ToggleContainer>
+
+                    {hasDerivationPath && (
+                        <div style={{ width: '60%' }}>
+                            <TextField label="Derivation Path (e.g m/44'/1729'/0'/0'/0')" value={derivationPath} onChange={(val) => setDerivationPath(val)} />
+                        </div>
+                    )}
                 </Fragment>
             )}
-            {type === 'key' && <TextField label={t('components.restoreBackup.enter_private_key')} value={key} onChange={val => setKey(val)} />}
+
+            {type === 'key' && (
+                <TextField
+                    label={t('components.restoreBackup.enter_private_key')}
+                    value={key}
+                    onChange={(val) => {
+                        setKey(val);
+                        setRestoreDisabled(!key || key.trim().length === 0);
+                        setError(false);
+                    }}
+                />
+            )}
+
             <RestoreFooter>
-                <RestoreButton buttonTheme="primary" disabled={isdisabled} onClick={importAddress}>
+                <RestoreButton buttonTheme="primary" disabled={restoreDisabled} onClick={importAddress}>
                     {t('general.verbs.restore')}
                 </RestoreButton>
             </RestoreFooter>

@@ -5,6 +5,7 @@ import { updateTokensAction } from '../../reduxContent/wallet/actions';
 import { createTokenTransaction } from '../../utils/transaction';
 import { TRANSACTION } from '../../constants/TransactionTypes';
 
+import { cloneDecryptedSigner } from '../../utils/wallet';
 import { getSelectedKeyStore } from '../../utils/general';
 import { getMainNode, getMainPath } from '../../utils/settings';
 
@@ -27,9 +28,9 @@ export function transferThunk(destination: string, amount: number, fee: number, 
         const mainPath = getMainPath(pathsList, selectedPath);
         const keyStore = getSelectedKeyStore(identities, selectedParentHash, selectedParentHash, isLedger, mainPath);
 
-        const operationId: string | boolean = await TzbtcTokenHelper.transferBalance(
+        const operationId: string | undefined = await TzbtcTokenHelper.transferBalance(
             tezosUrl,
-            signer,
+            isLedger ? signer : await cloneDecryptedSigner(signer, password),
             keyStore,
             selectedAccountHash,
             fee,
@@ -40,10 +41,10 @@ export function transferThunk(destination: string, amount: number, fee: number, 
             const errorObj = { name: err.message, ...err };
             console.error(`transferBalance failed with ${JSON.stringify(errorObj)}`);
             dispatch(createMessageAction(errorObj.name, true));
-            return false;
+            return undefined;
         });
 
-        if (!operationId) {
+        if (operationId === undefined) {
             return false;
         }
 

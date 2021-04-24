@@ -76,7 +76,9 @@
             "proposal": "Proposal",
             "evaluation": "evaluation",
             "voting": "Voting",
-            "implementation": "Implementation"
+            "implementation": "Implementation",
+            "vaults": "Vaults",
+            "collection": "Collection"
         },
         "errors": {
             "no_hex_data": "Введённая строка не является hex данными",
@@ -349,6 +351,7 @@
             "secret_key_15": "Секретный Ключ из 15 Слов",
             "errors": {
                 "invalid_length": "Ключевые фразы должны состоять из не более чем 15 слов.",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": " Обнаружены неверные слово или слова. Пожалуйста перепроверьте данные."
             }
         },
@@ -455,6 +458,7 @@
             "restore_backup": "Восстановить с Помощью Резервной Копии",
             "errors": {
                 "invalid_length": "Ключевая фраза должна состоять из не более чем 15 слов",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "Обнаружены неверные слово или слова. Пожалуйста перепроверьте данные"
             }
         },
@@ -517,7 +521,9 @@
         "errors": {
             "wrong_server": "Проблема с нашими серверами. Пожалуйста воздержитесь от дальнейших действий.",
             "wrong_network": "Ваша Tezos нода, которую вы используете либо застряла, либо находится на другой сети. Пожалуйста воздержитесь от дальнейших действий.",
-            "not_synced": "Похоже Conseil сервер не синхронизировался с сетью Tezos. Пожалуйста воздержитесь от дальнейших действий."
+            "not_synced": "Похоже Conseil сервер не синхронизировался с сетью Tezos. Пожалуйста воздержитесь от дальнейших действий.",
+            "tezos_node": "Tezos node doesn't appear to be responding, please delay further actions.",
+            "indexer_server": "Conseil indexer server doesn't appear to be responding, please delay further actions."
         }
     }
 }

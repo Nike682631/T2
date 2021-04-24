@@ -76,7 +76,9 @@
             "proposal": "Proposal",
             "evaluation": "evaluation",
             "voting": "Voting",
-            "implementation": "Implementation"
+            "implementation": "Implementation",
+            "vaults": "Vaults",
+            "collection": "Collection"
         },
         "errors": {
             "no_hex_data": "Die angegebene Zeichenfolge sieht nicht wie Hex-Daten aus",
@@ -349,6 +351,7 @@
             "secret_key_15": "15 Wort Geheim Schlüssel",
             "errors": {
                 "invalid_length": "Seed phrases müssen mehr als 15 Wörter beinhalten",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "Ungültige Wörter festgestellt. Bitte nochmal nachprüfen."
             }
         },
@@ -455,6 +458,7 @@
             "restore_backup": "Wiederherstellen aus Sicherung",
             "errors": {
                 "invalid_length": "Seed phrases muss mehr als 15 Wörter enthalten",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "Ungültige Wörter entdeckt. Bitte nochmal prüfen."
             }
         },
@@ -517,7 +521,9 @@
         "errors": {
             "wrong_server": "Irgendetwas stimmt nicht mit unseren Servern. Bitte verzögern Sie weitere Aktionen.",
             "wrong_network": "Es scheint, dass die Tezos-Node, die Sie verwenden, entweder stecken geblieben ist oder sich im falschen Netzwerk befindet. Bitte verzögern Sie weitere Aktionen.",
-            "not_synced": "Es scheint, dass der Conseil-Server nicht mit dem Tezos-Netzwerk synchronisiert ist. Bitte verzögern Sie weitere Aktionen."
+            "not_synced": "Es scheint, dass der Conseil-Server nicht mit dem Tezos-Netzwerk synchronisiert ist. Bitte verzögern Sie weitere Aktionen.",
+            "tezos_node": "Tezos node doesn't appear to be responding, please delay further actions.",
+            "indexer_server": "Conseil indexer server doesn't appear to be responding, please delay further actions."
         }
     }
 }

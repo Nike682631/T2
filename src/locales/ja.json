@@ -76,7 +76,9 @@
             "proposal": "Proposal",
             "evaluation": "evaluation",
             "voting": "Voting",
-            "implementation": "Implementation"
+            "implementation": "Implementation",
+            "vaults": "Vaults",
+            "collection": "Collection"
         },
         "errors": {
             "no_hex_data": "入力したデータに何か問題があります",
@@ -349,6 +351,7 @@
             "secret_key_15": "15語のシークレットキー",
             "errors": {
                 "invalid_length": "シードフェーズには最低15文字入れてください。",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "無効な文字を検出しました。ダブルチェックしてください。"
             }
         },
@@ -455,6 +458,7 @@
             "restore_backup": "バックアップから回復",
             "errors": {
                 "invalid_length": "シードフェーズには最低15文字入れてください。",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "無効な文字を検出しました。ダブルチェックしてください"
             }
         },
@@ -517,7 +521,9 @@
         "errors": {
             "wrong_server": "指定サーバーで何か問題がありました。今後のアクションを延期してください",
             "wrong_network": "ご利用のTezosノードは、スタックされているか誤ったネットワークにあるようです。今後のアクションを延期してください。",
-            "not_synced": "ConseilサーバーがTezosネットワークに同期されていないようです。今後のアクションを延期してください。"
+            "not_synced": "ConseilサーバーがTezosネットワークに同期されていないようです。今後のアクションを延期してください。",
+            "tezos_node": "Tezos node doesn't appear to be responding, please delay further actions.",
+            "indexer_server": "Conseil indexer server doesn't appear to be responding, please delay further actions."
         }
     }
 }

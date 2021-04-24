@@ -54,8 +54,13 @@ export enum AddressType {
     Delegated,
     Token,
     None,
-    STKR,
     TzBTC,
+    wXTZ,
+    kUSD,
+    BLND,
+    objkt,
+    STKR,
+    TokensPage,
 }
 
 export interface RegularAddress {
@@ -105,9 +110,14 @@ export interface TokenTransaction {
 
 export enum TokenKind {
     tzip7 = 'tzip7',
-    stkr = 'stkr',
-    usdtez = 'usdtez',
+    usdtz = 'usdtz',
     tzbtc = 'tzbtc',
+    wxtz = 'wxtz',
+    ethtz = 'ethtz',
+    kusd = 'kusd',
+    blnd = 'blnd',
+    objkt = 'objkt',
+    stkr = 'stkr',
 }
 
 export interface Token {
@@ -127,6 +137,44 @@ export interface Token {
     precision?: number;
     round?: number;
     transactionFeeFloor?: number;
+    helpLink?: string;
+}
+
+/**
+ * A special token which is generated through locking XTZ in "vaults"
+ */
+export interface VaultToken extends Token {
+    // Address of a contract which can originate Ovens
+    vaultCoreAddress: string;
+
+    // ID of a BigMap that contains the Oven Registry
+    vaultRegistryMapId: number;
+
+    // A list of Ovens owned by the user.
+    vaultList: Vault[];
+}
+
+export interface ArtToken extends Token {
+    marketAddress: string;
+}
+
+/**
+ * Data about an Vault.
+ */
+export interface Vault {
+    // TODO(keefertaylor): rename these vars
+
+    /** Contract address of the Oven contract. */
+    ovenAddress: string;
+
+    /** Account of the Oven's owner. */
+    ovenOwner: string;
+
+    /** Balance of the Oven, in Mutez. */
+    ovenBalance: number;
+
+    /** Baker for the oven. */
+    baker: string | undefined;
 }
 
 export type BookMark = Account | Token;

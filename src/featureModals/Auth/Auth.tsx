@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import * as bip39 from 'bip39';
 
 import { ms } from '../../styles/helpers';
 import { openLink } from '../../utils/general';
 import Loader from '../../components/Loader';
 import Tooltip from '../../components/Tooltip';
 import { RootState } from '../../types/store';
+import PasswordInput from '../../components/PasswordInput';
 
 import {
     ModalWrapper,
@@ -47,7 +49,7 @@ interface Props {
 
 const Auth = (props: Props) => {
     const { t } = useTranslation();
-    const { isLoading, selectedParentHash, signer } = useSelector((rootState: RootState) => rootState.app, shallowEqual);
+    const { isLoading, selectedParentHash, isLedger, signer } = useSelector((rootState: RootState) => rootState.app, shallowEqual);
     const activeModal = useSelector<RootState, string>((state: RootState) => state.modal.activeModal);
     const values = useSelector<RootState, object>((state) => state.modal.values, shallowEqual);
     const [result, setResult] = useState('');
@@ -58,6 +60,7 @@ const Auth = (props: Props) => {
     const [requestorDescription, setRequestorDescription] = useState('');
     const [requestorUrl, setRequestorUrl] = useState('');
     const [prompt, setPrompt] = useState('');
+    const [password, setPassword] = useState('');
 
     const isDisabled = isLoading || !prompt;
 
@@ -69,7 +72,7 @@ const Auth = (props: Props) => {
             return;
         }
 
-        const signature = await signer.signText(prompt);
+        const signature = await signer.signText(prompt, password);
 
         const req = values[activeModal]; // TODO: this should be an enum or constant, not a state lookup
         try {
@@ -106,8 +109,20 @@ const Auth = (props: Props) => {
             }
 
             if (req.prompt) {
-                let p = req.prompt.replace(/\n/g, '');
+                const stringPrompt = String(req.prompt);
+                let p = stringPrompt.replace(/\n/g, '');
                 p = p.slice(0, Math.min(100, p.length));
+
+                if (
+                    !p
+                        .split(' ')
+                        .map((w) => bip39.wordlists[bip39.getDefaultWordlist()].includes(w))
+                        .reduce((r, b) => r && b)
+                ) {
+                    setError(true);
+                    setResult('Prompt contains invalid data'); // TODO: localization
+                }
+
                 setPrompt(p);
             }
 
@@ -155,9 +170,19 @@ const Auth = (props: Props) => {
                         </ResultContainer>
                         <Footer>
                             <ButtonContainer>
-                                <InvokeButton buttonTheme="primary" disabled={isDisabled} onClick={onAuth}>
-                                    {t('general.verbs.authenticate')}
-                                </InvokeButton>
+                                {!isLedger && (
+                                    <PasswordInput
+                                        label={t('general.nouns.wallet_password')}
+                                        password={password}
+                                        onChange={(val) => setPassword(val)}
+                                        containerStyle={{ width: '60%', marginTop: '10px' }}
+                                    />
+                                )}
+                                {!error && (
+                                    <InvokeButton buttonTheme="primary" disabled={isDisabled} onClick={onAuth}>
+                                        {t('general.verbs.authenticate')}
+                                    </InvokeButton>
+                                )}
                             </ButtonContainer>
                         </Footer>
                     </Container>

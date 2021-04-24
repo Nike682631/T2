@@ -47,6 +47,12 @@ export const AddressInfo = styled.div`
     flex-wrap: wrap;
 `;
 
+export const AddressInfoLink = styled.div`
+    color: white;
+    margin-left: 6px;
+    margin-top: 8px;
+`;
+
 export const Gap = styled.div`
     width: 10px;
 `;
@@ -159,4 +165,9 @@ export const TooltipContent = styled.div`
     font-weight: 300;
     font-size: ${ms(-1)};
     max-width: ${ms(13)};
+`;
+
+export const LinkIcon = styled(TezosIcon)`
+    margin-left: 6px;
+    cursor: pointer;
 `;

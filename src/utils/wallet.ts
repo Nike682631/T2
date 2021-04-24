@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import path from 'path';
-import { KeyStore, KeyStoreType, TezosMessageUtils } from 'conseiljs';
-import { CryptoUtils } from 'conseiljs-softsigner';
+import { KeyStore, KeyStoreType, TezosMessageUtils, Signer } from 'conseiljs';
+import { CryptoUtils, SoftSigner } from 'conseiljs-softsigner';
 import { KeyStoreUtils } from 'conseiljs-ledgersigner';
 import { omit, cloneDeep } from 'lodash';
 
@@ -17,6 +17,10 @@ const { unlockAddress } = KeyStoreUtils;
 export async function saveUpdatedWallet(identities, walletLocation, walletFileName, password) {
     const completeWalletPath = path.join(walletLocation, walletFileName);
     return await saveWallet(completeWalletPath, { identities }, password);
+}
+
+export async function cloneDecryptedSigner(signer: SoftSigner, password: string): Promise<Signer> {
+    return SoftSigner.createSigner(await signer.getKey(password));
 }
 
 export function saveIdentitiesToLocal(identities: Identity[]) {
@@ -100,12 +104,12 @@ export async function saveWallet(filename: string, wallet: Wallet, passphrase: s
     };
 
     const p = new Promise((resolve, reject) => {
-        fs.writeFile(filename, JSON.stringify(encryptedWallet), (err) => {
+        fs.writeFile(filename, JSON.stringify(encryptedWallet), { mode: 0o600 }, (err) => {
             if (err) {
                 reject(err);
                 return;
             }
-            resolve();
+            resolve(undefined);
         });
     });
     await p;
