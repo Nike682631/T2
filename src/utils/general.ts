@@ -2,6 +2,7 @@ import { shell } from 'electron';
 import { TezosConseilClient, TezosNodeReader, KeyStore, KeyStoreCurve, KeyStoreType } from 'conseiljs';
 import { KeyStoreUtils } from 'conseiljs-softsigner';
 import { Node, NodeStatus } from '../types/general';
+import moment from 'moment';
 
 import { findIdentity } from './identity';
 import * as status from '../constants/StatusTypes';
@@ -29,8 +30,12 @@ export async function getNodesStatus(node: Node): Promise<NodeStatus> {
 }
 
 export function getNodesError({ tezos, conseil }: NodeStatus): string {
-    if (!tezos || !conseil) {
-        return 'nodes.errors.wrong_server';
+    if (!tezos) {
+        return 'nodes.errors.tezos_node';
+    }
+
+    if (!conseil) {
+        return 'nodes.errors.indexer_server';
     }
 
     if (conseil - tezos > 5) {
@@ -110,15 +115,27 @@ export function isReady(addressStatus, storeType?, tab?) {
     );
 }
 
-export function openLink(link) {
+export function openLink(link: string) {
+    if (!link.startsWith('https://')) {
+        throw new Error('Invalid URL provided, only https scheme is accepted');
+    }
+
     shell.openExternal(link);
 }
 
 export function openBlockExplorerForOperation(operation: string, network: string = 'mainnet') {
+    if (!blockExplorerHost.startsWith('https://')) {
+        throw new Error('Invalid URL provided, only https scheme is accepted');
+    }
+
     shell.openExternal(`${blockExplorerHost}/${network}/operations/${operation}`);
 }
 
 export function openBlockExplorerForAccount(account: string, network: string = 'mainnet') {
+    if (!blockExplorerHost.startsWith('https://')) {
+        throw new Error('Invalid URL provided, only https scheme is accepted');
+    }
+
     shell.openExternal(`${blockExplorerHost}/${network}/accounts/${account}`);
 }
 
@@ -138,3 +155,13 @@ export const getVersionFromApi = async () => {
         console.error(error);
     }
 };
+
+export function formatDate(d) {
+    const DateFormat = {
+        lastDay: '[Yesterday]',
+        sameDay: '[Today]',
+        sameElse: 'YYYY, MMMM DD',
+    };
+
+    return moment(d).calendar(undefined, DateFormat);
+}

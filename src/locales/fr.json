@@ -76,7 +76,9 @@
             "proposal": "Proposal",
             "evaluation": "evaluation",
             "voting": "Voting",
-            "implementation": "Implementation"
+            "implementation": "Implementation",
+            "vaults": "Vaults",
+            "collection": "Collection"
         },
         "errors": {
             "no_hex_data": "La string fournie ne ressemble pas à de l’hex data",
@@ -349,6 +351,7 @@
             "secret_key_15": "Clé secrète de 15 mots",
             "errors": {
                 "invalid_length": "La phrase de recovery ne doit pas comporter plus de 15 mots.",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "Mot(s) invalide(s) détécté(s). Merci de vérifier."
             }
         },
@@ -455,6 +458,7 @@
             "restore_backup": "Restaurer votre sauvegarde",
             "errors": {
                 "invalid_length": "La phrase de recovery ne doit pas comporter plus de 15 mots.",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "Mot(s) invalides détécté(s). Merci de vérifier."
             }
         },
@@ -517,7 +521,9 @@
         "errors": {
             "wrong_server": "Quelque chose ne va pas avec nos serveurs. Merci de retarder toute autre action.",
             "wrong_network": "Il semblerait que le noeud Tezos que vous utilisez est soit bloqué soit sur le mauvais réseau. Merci de retarder toute autre action.",
-            "not_synced": "Il semblerait que le serveur Conseil n`est pas synchronisé avec le réseau Tezos. Merci de retarder toute autre action."
+            "not_synced": "Il semblerait que le serveur Conseil n`est pas synchronisé avec le réseau Tezos. Merci de retarder toute autre action.",
+            "tezos_node": "Tezos node doesn't appear to be responding, please delay further actions.",
+            "indexer_server": "Conseil indexer server doesn't appear to be responding, please delay further actions."
         }
     }
 }

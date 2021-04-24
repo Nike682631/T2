@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-
-import TextField from '../../../components/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { SoftSigner } from 'conseiljs-softsigner';
+import styled from 'styled-components';
+
+import { cloneDecryptedSigner } from '../../../utils/wallet';
+import TextField from '../../../components/TextField';
+import PasswordInput from '../../../components/PasswordInput';
 import CustomTextArea from '../../../components/CustomTextArea';
 import CopyButton from '../../../components/CopyButton';
 import { getSelectedKeyStore } from '../../../utils/general';
@@ -13,19 +17,16 @@ import { getMainPath } from '../../../utils/settings';
 
 import { publicKeyThunk } from '../thunks';
 
-import {
-    Container,
-    MainContainer,
-    ButtonContainer,
-    ResultContainer,
-    InvokeButton,
-    Result,
-    InfoContainer,
-    MessageContainer,
-    InfoIcon,
-    WarningIcon,
-    Footer,
-} from '../../style';
+import { Container, MainContainer, ButtonContainer, ResultContainer, InvokeButton, Result, MessageContainer, InfoIcon, WarningIcon, Footer } from '../../style';
+
+const PublicKeyContainer = styled.div`
+    display: flex;
+    padding: 0 40px;
+    justify-content: left;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+`;
 
 const Sign = () => {
     const { t } = useTranslation();
@@ -34,12 +35,16 @@ const Sign = () => {
     const { identities } = useSelector((rootState: RootState) => rootState.wallet, shallowEqual);
     const { values, activeTab } = useSelector<RootState, ModalState>((state) => state.modal, shallowEqual);
     const { settings } = useSelector((rootState: RootState) => rootState, shallowEqual);
+
     const [message, setMessage] = useState('');
     const [result, setResult] = useState('');
     const [error, setError] = useState(false);
     const [key, setKey] = useState('');
-    const isDisabled = isLoading || !message;
     const [keyRevealed, setKeyRevealed] = useState(true);
+    const [password, setPassword] = useState('');
+    const [ledgerModalOpen, setLedgerModalOpen] = useState(false);
+
+    const isDisabled = isLoading || !message || ledgerModalOpen;
     const { selectedPath, pathsList } = settings;
     const derivationPath = isLedger ? getMainPath(pathsList, selectedPath) : '';
 
@@ -59,7 +64,17 @@ const Sign = () => {
             return;
         }
 
-        const signature = await signer.signText(message);
+        let signature: string = '';
+        if (isLedger) {
+            try {
+                setLedgerModalOpen(true);
+                signature = await signer.signText(message);
+            } finally {
+                setLedgerModalOpen(false);
+            }
+        } else {
+            signature = await (await cloneDecryptedSigner(signer as SoftSigner, password)).signText(message);
+        }
 
         setError(false);
         setResult(signature);
@@ -101,13 +116,24 @@ const Sign = () => {
                     />
                 )}
             </ResultContainer>
+            {!keyRevealed && (
+                <PublicKeyContainer>
+                    The account is not revealed, copy public key? <CopyButton text={key} title="" color="accent" />
+                </PublicKeyContainer>
+            )}
             <Footer>
                 <ButtonContainer>
-                    {!keyRevealed && (
-                        <InfoContainer>
-                            The account is not revealed, copy public key? <CopyButton text={key} title="" color="accent" />
-                        </InfoContainer>
+                    {!isLedger && (
+                        <PasswordInput
+                            label={t('general.nouns.wallet_password')}
+                            password={password}
+                            onChange={(val) => setPassword(val)}
+                            containerStyle={{ width: '60%', marginTop: '10px' }}
+                        />
                     )}
+
+                    {isLedger && ledgerModalOpen && <>Please confirm the operation on the Ledger device</>}
+
                     <InvokeButton buttonTheme="primary" disabled={isDisabled} onClick={onSign}>
                         {t('general.verbs.sign')}
                     </InvokeButton>

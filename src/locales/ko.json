@@ -76,7 +76,9 @@
             "proposal": "Proposal",
             "evaluation": "evaluation",
             "voting": "Voting",
-            "implementation": "Implementation"
+            "implementation": "Implementation",
+            "vaults": "Vaults",
+            "collection": "Collection"
         },
         "errors": {
             "no_hex_data": "입력 한 데이터가 잘못되었습니다.",
@@ -349,6 +351,7 @@
             "secret_key_15": "15자리 비밀 키",
             "errors": {
                 "invalid_length": "시드 문구는 15자 이내여야 합니다.",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "잘못된 단어를 감지했습니다. 두 번 확인해주세요."
             }
         },
@@ -455,6 +458,7 @@
             "restore_backup": "백업에서 복원",
             "errors": {
                 "invalid_length": "시드 문구는 15자 이내여야 합니다.",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "잘못된 단어를 감지했습니다. 두 번 확인해주세요."
             }
         },
@@ -517,7 +521,9 @@
         "errors": {
             "wrong_server": "지정된 서버에 문제가 있습니다. 추가 조치를 지연하세요.",
             "wrong_network": "사용 중인 Tezos 노드가 막혔거나 잘못된 네트워크에 있는 것 같습니다. 추가 조치를 지연하세요.",
-            "not_synced": "Conseil 서버가 Tezos 네트워크와 동기화되지 않은 것으로 보입니다. 추가 조치를 지연하세요."
+            "not_synced": "Conseil 서버가 Tezos 네트워크와 동기화되지 않은 것으로 보입니다. 추가 조치를 지연하세요.",
+            "tezos_node": "Tezos node doesn't appear to be responding, please delay further actions.",
+            "indexer_server": "Conseil indexer server doesn't appear to be responding, please delay further actions."
         }
     }
 }

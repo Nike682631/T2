@@ -76,7 +76,9 @@
             "proposal": "Proposal",
             "evaluation": "evaluation",
             "voting": "Voting",
-            "implementation": "Implementation"
+            "implementation": "Implementation",
+            "vaults": "Vaults",
+            "collection": "Collection"
         },
         "errors": {
             "no_hex_data": "Algo está mal con los datos que ingresó",
@@ -349,6 +351,7 @@
             "secret_key_15": "Clave secreta de 15 palabras",
             "errors": {
                 "invalid_length": "La frase secreta debe contener 15 palabras.",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "Palabra(s) inválida(s). Por favor revise."
             }
         },
@@ -455,6 +458,7 @@
             "restore_backup": "Recuperar del Respaldo",
             "errors": {
                 "invalid_length": "La frase secreta debe contener 15 palabras.",
+                "invalid_length_15": "Fundraiser seed phrase contains 15 words.",
                 "invalid_words": "Palabra(s) inválida(s). Por favor revise."
             }
         },
@@ -517,7 +521,9 @@
         "errors": {
             "wrong_server": "Palabra inválida, por favor vuelve a intentarlo.",
             "wrong_network": "Parece que el nodo Tezos que estás usando está congelado o en la red equivocada. Por favor retrasa acciones adicionales.",
-            "not_synced": "Para que el servidor Conseil no está sincronizado con la red Tezos. Por favor retrasa acciones adicionales."
+            "not_synced": "Para que el servidor Conseil no está sincronizado con la red Tezos. Por favor retrasa acciones adicionales.",
+            "tezos_node": "Tezos node doesn't appear to be responding, please delay further actions.",
+            "indexer_server": "Conseil indexer server doesn't appear to be responding, please delay further actions."
         }
     }
 }
