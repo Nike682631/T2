@@ -121,5 +121,3 @@ jobs:
         npm i
         npm run package
         npm run coverage
-        npm run coverage -- -u
-        npm run coverage
