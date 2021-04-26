@@ -114,9 +114,9 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - run: |
-        sudo apt-get install rpm xvfb
         export DISPLAY=':99.0'
         Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        sudo apt install libusb-1.0-0-dev
         npm i
         npm run package
         npm run coverage
