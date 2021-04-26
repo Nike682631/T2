@@ -18,6 +18,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
+        sudo apt install libusb-1.0-0-dev libudev-dev
         npm i
         cd src
         npm i
@@ -116,7 +117,7 @@ jobs:
     - run: |
         export DISPLAY=':99.0'
         Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-        sudo apt install libusb-1.0-0-dev
+        sudo apt install libusb-1.0-0-dev libudev-dev
         npm i
         npm run package
         npm run coverage
